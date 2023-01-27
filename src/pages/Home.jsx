@@ -22,7 +22,7 @@ const Home = () => {
           <div className="card-body">
             <p>{data.username}</p>
             <p>{data.email}</p>
-            <QRCode value={data} />
+            <QRCode value={data.username} />
           </div>
         </div>
       ) : (
