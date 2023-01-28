@@ -8,7 +8,7 @@ const Home = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("user");
-    // navigate("/register");
+    navigate("/login");
   };
   //   const [username, setUsername] = useState("");
   //   const [password, setPassword] = useState("");
@@ -34,9 +34,9 @@ const Home = () => {
           </div>
         </div>
       ) : (
-        <p>Loading....</p>
+        <p>Log in to see your QR code</p>
       )}
-      <button onClick={handleLogout}>Logout</button>
+      {data && <button onClick={handleLogout}>Logout</button>}
     </div>
   );
 };
