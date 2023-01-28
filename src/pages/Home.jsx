@@ -2,8 +2,14 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import QRCode from "react-qr-code";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    // navigate("/register");
+  };
   //   const [username, setUsername] = useState("");
   //   const [password, setPassword] = useState("");
   const [data, setData] = useState(null);
@@ -22,12 +28,15 @@ const Home = () => {
           <div className="card-body">
             <p>{data.username}</p>
             <p>{data.email}</p>
-            <QRCode value={data.username} />
+            <QRCode
+              value={JSON.stringify({ name: data.username, email: data.email })}
+            />
           </div>
         </div>
       ) : (
         <p>Loading....</p>
       )}
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 };

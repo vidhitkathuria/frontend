@@ -4,23 +4,30 @@ import axios from "axios";
 const Login = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [user, setUser] = useState([]);
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
 
   const handleLogin = async () => {
-    const resp = await axios.post("http://localhost:3000/api/users/login", {
-      email,
-      password,
-    });
+    console.log(user);
+    const resp = await axios.post(
+      "http://localhost:3000/api/users/login",
+      user
+    );
     setUser(resp.data);
     console.log(resp.data);
+    localStorage.setItem("user", JSON.stringify(resp.data));
+
+    // setUser(resp.data);
     navigate("/");
   };
-  useEffect(() => {
-    const json = JSON.stringify(user);
-    localStorage.setItem("user", json);
-  }, [user]);
+  // useEffect(() => {
+  //   const json = JSON.stringify(user);
+  //   localStorage.setItem("user", json);
+  // }, [user]);
 
   return (
     <div className="login d-flex align-items-center">
@@ -34,7 +41,7 @@ const Login = () => {
             <input
               type="email"
               className="form-control"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
             />
           </div>
           <div className="mb-4">
@@ -44,7 +51,7 @@ const Login = () => {
             <input
               type="text"
               className="form-control"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setUser({ ...user, password: e.target.value })}
             />
           </div>
         </form>
